@@ -2062,6 +2062,16 @@ header.header {
   top: 0;
   width: 100%;
 }
+.post-body a:not(.btn) {
+  color: #1a0dab;
+  border-bottom: none;
+  border-bottom: 1px solid #0593d3;
+}
+.post-body a:not(.btn):hover {
+  color: #681da8;
+  border-bottom: none;
+  border-bottom: 1px solid #fc6423;
+}
 .post-gallery {
   display: flex;
   min-height: 200px;
