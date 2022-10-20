@@ -18,11 +18,45 @@
   --btn-default-hover-bg: #222;
   --btn-default-hover-color: #fff;
   --btn-default-hover-border-color: #222;
-  --highlight-background: #f3f3f3;
-  --highlight-foreground: #444;
-  --highlight-gutter-background: #e1e1e1;
-  --highlight-gutter-foreground: #555;
+  --highlight-background: #eee;
+  --highlight-foreground: #000;
+  --highlight-gutter-background: #d6d6d6;
+  --highlight-gutter-foreground: #171717;
   color-scheme: light;
+}
+.darkmode--activated {
+  --body-bg-color: #282828;
+  --content-bg-color: #333;
+  --card-bg-color: #555;
+  --text-color: #ccc;
+  --blockquote-color: #bbb;
+  --link-color: #ccc;
+  --link-hover-color: #eee;
+  --brand-color: #ddd;
+  --brand-hover-color: #ddd;
+  --table-row-odd-bg-color: #282828;
+  --table-row-hover-bg-color: #363636;
+  --menu-item-bg-color: #555;
+  --btn-default-bg: #222;
+  --btn-default-color: #ccc;
+  --btn-default-border-color: #555;
+  --btn-default-hover-bg: #666;
+  --btn-default-hover-color: #ccc;
+  --btn-default-hover-border-color: #666;
+  --highlight-background: #0d1117;
+  --highlight-foreground: #c9d1d9;
+  --highlight-gutter-background: #1f242a;
+  --highlight-gutter-foreground: #b6bdc5;
+}
+.darkmode--activated img {
+  opacity: 0.75;
+}
+.darkmode--activated img:hover {
+  opacity: 0.9;
+}
+.darkmode--activated code {
+  color: #69dbdc;
+  background: transparent;
 }
 html {
   line-height: 1.15; /* 1 */
@@ -362,15 +396,7 @@ td {
   top: -5px;
   transform: rotate(-45deg);
 }
-/*!
-  Theme: Default
-  Description: Original highlight.js style
-  Author: (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
-  Maintainer: @highlightjs/core-team
-  Website: https://highlightjs.org/
-  License: see project LICENSE
-  Touched: 2021
-*/pre code.hljs{display:block;overflow-x:auto;padding:1em}code.hljs{padding:3px 5px}.hljs{background:#f3f3f3;color:#444}.hljs-comment{color:#697070}.hljs-punctuation,.hljs-tag{color:#444a}.hljs-tag .hljs-attr,.hljs-tag .hljs-name{color:#444}.hljs-attribute,.hljs-doctag,.hljs-keyword,.hljs-meta .hljs-keyword,.hljs-name,.hljs-selector-tag{font-weight:700}.hljs-deletion,.hljs-number,.hljs-quote,.hljs-selector-class,.hljs-selector-id,.hljs-string,.hljs-template-tag,.hljs-type{color:#800}.hljs-section,.hljs-title{color:#800;font-weight:700}.hljs-link,.hljs-operator,.hljs-regexp,.hljs-selector-attr,.hljs-selector-pseudo,.hljs-symbol,.hljs-template-variable,.hljs-variable{color:#ab5656}.hljs-literal{color:#695}.hljs-addition,.hljs-built_in,.hljs-bullet,.hljs-code{color:#397300}.hljs-meta{color:#1f7199}.hljs-meta .hljs-string{color:#38a}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}
+pre code.hljs{display:block;overflow-x:auto;padding:1em}code.hljs{padding:3px 5px}.hljs{background:#eee;color:#000}.hljs-addition,.hljs-attribute,.hljs-emphasis,.hljs-link{color:#070}.hljs-emphasis{font-style:italic}.hljs-deletion,.hljs-string,.hljs-strong{color:#d14}.hljs-strong{font-weight:700}.hljs-comment,.hljs-quote{color:#998;font-style:italic}.hljs-section,.hljs-title{color:#900}.hljs-class .hljs-title,.hljs-title.class_,.hljs-type{color:#458}.hljs-template-variable,.hljs-variable{color:#369}.hljs-bullet{color:#970}.hljs-meta{color:#34b}.hljs-code,.hljs-keyword,.hljs-literal,.hljs-number,.hljs-selector-tag{color:#099}.hljs-regexp{background-color:#fff0ff;color:#808}.hljs-symbol{color:#990073}.hljs-name,.hljs-selector-class,.hljs-selector-id,.hljs-tag{color:#070}
 .highlight:hover .copy-btn,
 pre:hover .copy-btn {
   opacity: 1;
@@ -386,11 +412,29 @@ figure.highlight .table-container {
   padding: 2px 6px;
   position: absolute;
   transition: opacity 0.2s ease-in-out;
-  background: #fff;
-  border: 0;
-  font-size: 0.8125em;
+  color: var(--highlight-foreground);
+  font-size: 14px;
   right: 0;
-  top: 0;
+  top: 2px;
+}
+figure.highlight {
+  border-radius: 5px;
+  box-shadow: 0 10px 30px 0 rgba(0,0,0,0.4);
+  padding-top: 30px;
+}
+figure.highlight .table-container {
+  border-radius: 0 0 5px 5px;
+}
+figure.highlight::before {
+  background: #fc625d;
+  box-shadow: 20px 0 #fdbc40, 40px 0 #35cd4b;
+  left: 12px;
+  margin-top: -20px;
+  position: absolute;
+  border-radius: 50%;
+  content: ' ';
+  height: 12px;
+  width: 12px;
 }
 code,
 kbd,
@@ -772,14 +816,17 @@ pre code {
     transform: translate(1pt, -2pt) rotate(-1deg);
   }
 }
+.mermaid {
+  margin-bottom: 20px;
+  text-align: center;
+}
 .post-body .note {
   border-radius: 3px;
   margin-bottom: 20px;
   padding: 1em;
   position: relative;
-  background: #f9f9f9;
-  border: initial;
-  border-left: 3px solid #eee;
+  border: 1px solid #eee;
+  border-left-width: 5px;
 }
 .post-body .note summary {
   cursor: pointer;
@@ -825,7 +872,6 @@ pre code {
   top: calc(50% - 1em);
 }
 .post-body .note.default {
-  background: #f7f7f7;
   border-left-color: #777;
 }
 .post-body .note.default h2,
@@ -842,7 +888,6 @@ pre code {
   color: #777;
 }
 .post-body .note.primary {
-  background: #f5f0fa;
   border-left-color: #6f42c1;
 }
 .post-body .note.primary h2,
@@ -859,7 +904,6 @@ pre code {
   color: #6f42c1;
 }
 .post-body .note.info {
-  background: #eef7fa;
   border-left-color: #428bca;
 }
 .post-body .note.info h2,
@@ -876,7 +920,6 @@ pre code {
   color: #428bca;
 }
 .post-body .note.success {
-  background: #eff8f0;
   border-left-color: #5cb85c;
 }
 .post-body .note.success h2,
@@ -893,7 +936,6 @@ pre code {
   color: #5cb85c;
 }
 .post-body .note.warning {
-  background: #fdf8ea;
   border-left-color: #f0ad4e;
 }
 .post-body .note.warning h2,
@@ -910,7 +952,6 @@ pre code {
   color: #f0ad4e;
 }
 .post-body .note.danger {
-  background: #fcf1f2;
   border-left-color: #d9534f;
 }
 .post-body .note.danger h2,
@@ -925,6 +966,11 @@ pre code {
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   color: #d9534f;
+}
+.pdfobject-container iframe,
+.pdfobject-container embed {
+  height: 1024px;
+  width: 100%;
 }
 .post-body .tabs {
   margin-bottom: 20px;
@@ -2063,12 +2109,12 @@ header.header {
   width: 100%;
 }
 .post-body a:not(.btn) {
-  color: #1a0dab;
+  color: #4169e1;
   border-bottom: none;
   border-bottom: 1px solid #0593d3;
 }
 .post-body a:not(.btn):hover {
-  color: #681da8;
+  color: #ba55d3;
   border-bottom: none;
   border-bottom: 1px solid #fc6423;
 }
