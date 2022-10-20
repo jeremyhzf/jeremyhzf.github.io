@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="UMgeGAOIi3I5Ncgc_2ZRy-AIufQL7eZNutKIai7M5g8">
+  <meta name="baidu-site-verification" content="code-sZmaqxmBhP">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"jeremyhzf.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.13.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":true,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="介绍MySQL 是应用最广泛的开源关系数据库，是许多常见网站、应用程序和商业产品使用的主要关系数据存储。MySQL 有 20 多年的社区开发和支持历史，是一种可靠、稳定而安全的基于 SQL 的数据库管理系统。MySQL 数据库适用于各种使用案例，包括任务关键型应用程序、动态网站以及用于软件、硬件和设备的嵌入式数据库。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mysql实战">
+<meta property="og:url" content="https://jeremyhzf.com/2018/948ea07e2574/index.html">
+<meta property="og:site_name" content="Jeremy">
+<meta property="og:description" content="介绍MySQL 是应用最广泛的开源关系数据库，是许多常见网站、应用程序和商业产品使用的主要关系数据存储。MySQL 有 20 多年的社区开发和支持历史，是一种可靠、稳定而安全的基于 SQL 的数据库管理系统。MySQL 数据库适用于各种使用案例，包括任务关键型应用程序、动态网站以及用于软件、硬件和设备的嵌入式数据库。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-07-25T04:30:05.000Z">
+<meta property="article:modified_time" content="2018-07-25T04:30:05.000Z">
+<meta property="article:author" content="Jeremyhzf">
+<meta property="article:tag" content="Mysql">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://jeremyhzf.com/2018/948ea07e2574/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://jeremyhzf.com/2018/948ea07e2574/","path":"2018/948ea07e2574/","title":"Mysql实战"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Mysql实战 | Jeremy</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Jeremy</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">分享技术与生活</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD"><span class="nav-text">下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%EF%BC%88Centos7%EF%BC%89"><span class="nav-text">安装（Centos7）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E5%8D%B8%E8%BD%BD%E6%97%A7%E7%89%88%E6%9C%AC"><span class="nav-text">1、卸载旧版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E5%AE%89%E8%A3%85%E6%9C%8D%E5%8A%A1%E7%AB%AF"><span class="nav-text">2、安装服务端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E5%AE%89%E8%A3%85%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="nav-text">3、安装客户端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81user%E9%85%8D%E7%BD%AE"><span class="nav-text">4、user配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5%E3%80%81%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-text">5、配置文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-text">使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-text">原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MYSQL%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F"><span class="nav-text">MYSQL执行顺序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mysql%E7%9A%84binlog"><span class="nav-text">Mysql的binlog</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#binlog%E4%BB%8B%E7%BB%8D"><span class="nav-text">binlog介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Binlog%E7%9A%84%E5%88%86%E7%B1%BB"><span class="nav-text">Binlog的分类</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="nav-text">事务隔离级别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E4%BB%8E%E5%90%8C%E6%AD%A5"><span class="nav-text">主从同步</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE"><span class="nav-text">主服务器配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE"><span class="nav-text">从服务器配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E9%85%8D%E7%BD%AE"><span class="nav-text">其他配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%90%AF%E8%BF%9C%E7%A8%8B%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90"><span class="nav-text">开启远程访问权限</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%BC%80%E5%90%AFmysql%E8%BF%9C%E7%A8%8B%E8%AE%BF%E9%97%AE"><span class="nav-text">一、开启mysql远程访问</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%92%A4%E9%94%80%E5%B7%B2%E7%BB%8F%E8%B5%8B%E4%BA%88%E7%BB%99-MySQL-%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E7%9A%84%E6%9D%83%E9%99%90%E3%80%82"><span class="nav-text">二、撤销已经赋予给 MySQL 用户权限的权限。</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%88%E6%9D%83"><span class="nav-text">授权</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8E%88%E6%9D%83%E6%A0%BC%E5%BC%8F%EF%BC%9A"><span class="nav-text">授权格式：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8E%88%E6%9D%83%E5%8F%82%E6%95%B0%E8%AE%B2%E8%A7%A3%EF%BC%9A"><span class="nav-text">授权参数讲解：</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeremyhzf"
+      src="https://avatars.githubusercontent.com/u/49558849">
+  <p class="site-author-name" itemprop="name">Jeremyhzf</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeremyhzf" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeremyhzf" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jeremyhzf@gmail.com" title="E-Mail → mailto:jeremyhzf@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/jeremyhzf" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jeremyhzf.com/2018/948ea07e2574/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/49558849">
+      <meta itemprop="name" content="Jeremyhzf">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeremy">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Mysql实战 | Jeremy">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Mysql实战
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-07-25 12:30:05" itemprop="dateCreated datePublished" datetime="2018-07-25T12:30:05+08:00">2018-07-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Mysql/" itemprop="url" rel="index"><span itemprop="name">Mysql</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>MySQL 是应用最广泛的开源关系数据库，是许多常见网站、应用程序和商业产品使用的主要关系数据存储。MySQL 有 20 多年的社区开发和支持历史，是一种可靠、稳定而安全的基于 SQL 的数据库管理系统。MySQL 数据库适用于各种使用案例，包括任务关键型应用程序、动态网站以及用于软件、硬件和设备的嵌入式数据库。</p>
+<span id="more"></span>
+
+<h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><blockquote>
+<p>  <a target="_blank" rel="noopener" href="https://downloads.mysql.com/archives/community/">官方下载地址</a></p>
+</blockquote>
+<p>软件包列表：</p>
+<ul>
+<li>  <code>MySQL-client-5.6.24-1.el6.x86_64.rpm</code></li>
+<li>  <code>MySQL-server-5.6.24-1.el6.x86_64.rpm</code></li>
+<li>  <code>mysql-connector-java-5.1.27.tar.gz</code> ： 操作系统选择<code>Platform Independent</code>（平台无关）</li>
+</ul>
+<h2 id="安装（Centos7）"><a href="#安装（Centos7）" class="headerlink" title="安装（Centos7）"></a>安装（Centos7）</h2><h3 id="1、卸载旧版本"><a href="#1、卸载旧版本" class="headerlink" title="1、卸载旧版本"></a>1、卸载旧版本</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rpm -qa|grep mysql                                  <span class="comment"># 查看</span></span></span><br><span class="line">mysql-libs-5.1.73-7.el6.x86_64</span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rpm -e --nodeps mysql-libs-5.1.73-7.el6.x86_64      <span class="comment"># 卸载</span></span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2、安装服务端"><a href="#2、安装服务端" class="headerlink" title="2、安装服务端"></a>2、安装服务端</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rpm -ivh MySQL-server-5.6.24-1.el6.x86_64.rpm</span>   </span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cat</span> /root/.mysql_secret                             <span class="comment"># 查看安装产生的随机密码</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">service mysql status</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">service mysql start</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3、安装客户端"><a href="#3、安装客户端" class="headerlink" title="3、安装客户端"></a>3、安装客户端</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rpm -ivh MySQL-client-5.6.24-1.el6.x86_64.rpm</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">mysql -uroot -pOEXaQuS8IWkG19Xs                     <span class="comment"># 连接mysql服务端</span></span></span><br><span class="line"><span class="meta prompt_">mysql&gt; </span><span class="language-bash">SET PASSWORD=PASSWORD(<span class="string">&#x27;000000&#x27;</span>);               <span class="comment">#修改密码</span></span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4、user配置"><a href="#4、user配置" class="headerlink" title="4、user配置"></a>4、user配置</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">mysql&gt;</span><span class="language-bash">use mysql;</span></span><br><span class="line"><span class="meta prompt_">mysql&gt;</span><span class="language-bash">select User, Host, Password from user;              <span class="comment"># 查询User表</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">修改Host，可以远程访问</span></span><br><span class="line"><span class="meta prompt_">mysql&gt;</span><span class="language-bash">update user <span class="built_in">set</span> host=<span class="string">&#x27;%&#x27;</span> <span class="built_in">where</span> host=<span class="string">&#x27;localhost&#x27;</span>;</span>    </span><br><span class="line"><span class="meta prompt_">mysql&gt;</span><span class="language-bash">delete from user <span class="built_in">where</span> Host=<span class="string">&#x27;hadoop102&#x27;</span>;</span></span><br><span class="line"><span class="meta prompt_">mysql&gt;</span><span class="language-bash">delete from user <span class="built_in">where</span> Host=<span class="string">&#x27;127.0.0.1&#x27;</span>;</span></span><br><span class="line"><span class="meta prompt_">mysql&gt;</span><span class="language-bash">delete from user <span class="built_in">where</span> Host=<span class="string">&#x27;::1&#x27;</span>;</span></span><br><span class="line"><span class="meta prompt_">mysql&gt;</span><span class="language-bash">flush privileges;                                    <span class="comment"># 刷新</span></span></span><br><span class="line"><span class="meta prompt_">mysql&gt;</span><span class="language-bash">quit;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="5、配置文件"><a href="#5、配置文件" class="headerlink" title="5、配置文件"></a>5、配置文件</h3><p>配置文件位置，Linux默认在<code>/etc/my.cnf</code>，如果找不到通过一下命令查找：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">两种方式都可以查找my.cnf位置</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">locate my.cnf</span></span><br><span class="line"><span class="meta prompt_">mysql&gt; </span><span class="language-bash">select @@basedir;</span></span><br></pre></td></tr></table></figure>
+
+<p>修改配置文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">[client]</span><br><span class="line">default-character-set=utf8mb4</span><br><span class="line">[mysql]</span><br><span class="line">default-character-set=utf8mb4</span><br><span class="line">[mysqld]</span><br><span class="line">init_connect=&#x27;SET collation_connection = utf8mb4_unicode_ci&#x27;</span><br><span class="line">init_connect=&#x27;SET NAMES utf8mb4&#x27;</span><br><span class="line">character-set-server=utf8mb4</span><br><span class="line">collation-server=utf8mb4_unicode_ci</span><br><span class="line"># 开启binlog</span><br><span class="line">log-bin=mysql-bin      </span><br><span class="line">server-id=1</span><br><span class="line"># 设置日志三种格式：STATEMENT、ROW、MIXED 。</span><br><span class="line">binlog_format = mixed</span><br><span class="line"># 开启binlog的库</span><br><span class="line">binlog-do-db=db_name1</span><br><span class="line">binlog-do-db=db_name2</span><br><span class="line"># 数据存放位置</span><br><span class="line">datadir=/var/lib/mysql</span><br><span class="line">socket=/var/lib/mysql.sock</span><br><span class="line">[mysql_safe]</span><br><span class="line">log-error=/var/log/mysqld.log</span><br><span class="line">pid-file=/var/run/mysqld/mysqld.pid</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>  <code>log-bin=mysql-bin</code> 这个表示binlog日志的前缀是mysql-bin，以后生成的日志文件就是 mysql-bin.000001 的文件后面的数字按顺序生成，每次mysql重启或者到达单个文件大小的阈值时，新生一个文件，按顺序编号。</p>
+</blockquote>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>TODO</p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><h3 id="MYSQL执行顺序"><a href="#MYSQL执行顺序" class="headerlink" title="MYSQL执行顺序"></a>MYSQL执行顺序</h3><p>MySQL的语句一共分为11步，如下图所标注的那样，最先执行的总是FROM操作，最后执行的是LIMIT操作。其中每一个操作都会产生一张虚拟的表，这个虚拟的表作为一个处理的输入，只是这些虚拟的表对用户来说是透明的，但是只有最后一个虚拟的表才会被作为结果返回。如果没有在语句中指定某一个子句，那么将会跳过相应的步骤。</p>
+<p>下面我们来具体分析一下查询处理的每一个阶段</p>
+<ol>
+<li>FORM: 对FROM的左边的表和右边的表计算笛卡尔积。产生虚表VT1。</li>
+<li>ON: 对虚表VT1进行ON筛选，只有那些符合的行才会被记录在虚表VT2中。</li>
+<li>JOIN： 如果指定了OUTER JOIN（比如left join、 right join），那么保留表中未匹配的行就会作为外部行添加到虚拟表VT2中，产生虚拟表VT3, rug from子句中包含两个以上的表的话，那么就会对上一个join连接产生的结果VT3和下一个表重复执行步骤1~3这三个步骤，一直到处理完所有的表为止。</li>
+<li>WHERE： 对虚拟表VT3进行WHERE条件过滤。只有符合的记录才会被插入到虚拟表VT4中。</li>
+<li>GROUP BY: 根据group by子句中的列，对VT4中的记录进行分组操作，产生VT5。</li>
+<li>CUBE | ROLLUP: 对表VT5进行cube或者rollup操作，产生表VT6。</li>
+<li>HAVING： 对虚拟表VT6应用having过滤，只有符合的记录才会被 插入到虚拟表VT7中。</li>
+<li>SELECT： 执行select操作，选择指定的列，插入到虚拟表VT8中。</li>
+<li>DISTINCT： 对VT8中的记录进行去重。产生虚拟表VT9。</li>
+<li>ORDER BY: 将虚拟表VT9中的记录按照进行排序操作，产生虚拟表VT10。</li>
+<li>LIMIT：取出指定行的记录，产生虚拟表VT11, 并将结果返回。</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SQL</span>查询处理的步骤序号： </span><br><span class="line">(<span class="number">8</span>) <span class="keyword">SELECT</span> (<span class="number">9</span>) <span class="keyword">DISTINCT</span> (<span class="number">11</span>) <span class="operator">&lt;</span>TOP_specification<span class="operator">&gt;</span> <span class="operator">&lt;</span>select_list<span class="operator">&gt;</span></span><br><span class="line">(<span class="number">1</span>) <span class="keyword">FROM</span> <span class="operator">&lt;</span>left_table<span class="operator">&gt;</span></span><br><span class="line">(<span class="number">3</span>) <span class="operator">&lt;</span>join_type<span class="operator">&gt;</span> <span class="keyword">JOIN</span> <span class="operator">&lt;</span>right_table<span class="operator">&gt;</span></span><br><span class="line">(<span class="number">2</span>) <span class="keyword">ON</span> <span class="operator">&lt;</span>join_condition<span class="operator">&gt;</span></span><br><span class="line">(<span class="number">4</span>) <span class="keyword">WHERE</span> <span class="operator">&lt;</span>where_condition<span class="operator">&gt;</span></span><br><span class="line">(<span class="number">5</span>) <span class="keyword">GROUP</span> <span class="keyword">BY</span> <span class="operator">&lt;</span>group_by_list<span class="operator">&gt;</span></span><br><span class="line">(<span class="number">6</span>) <span class="keyword">WITH</span> &#123;<span class="keyword">CUBE</span> <span class="operator">|</span> <span class="keyword">ROLLUP</span>&#125;</span><br><span class="line">(<span class="number">7</span>) <span class="keyword">HAVING</span> <span class="operator">&lt;</span>having_condition<span class="operator">&gt;</span></span><br><span class="line">(<span class="number">10</span>) <span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="operator">&lt;</span>order_by_list<span class="operator">&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Mysql的binlog"><a href="#Mysql的binlog" class="headerlink" title="Mysql的binlog"></a>Mysql的binlog</h3><h4 id="binlog介绍"><a href="#binlog介绍" class="headerlink" title="binlog介绍"></a>binlog介绍</h4><p>MySQL的二进制日志可以说MySQL最重要的日志了，它记录了所有的DDL和DML(除了数据查询语句)语句，以事件形式记录，还包含语句所执行的消耗的时间，MySQL的二进制日志是事务安全型的。</p>
+<p>一般来说开启二进制日志大概会有1%的性能损耗。二进制有两个最重要的使用场景:</p>
+<ol>
+<li>  MySQL Replication在Master端开启binlog，Master把它的二进制日志传递给slaves来达到master-slave数据一致的目的。</li>
+<li>  数据恢复，通过使用mysqlbinlog工具来使恢复数据。</li>
+</ol>
+<p>二进制日志包括两类文件：二进制日志索引文件（文件名后缀为.index）用于记录所有的二进制文件，二进制日志文件（文件名后缀为.00000*）记录数据库所有的DDL和DML(除了数据查询语句)语句事件。</p>
+<h4 id="Binlog的分类"><a href="#Binlog的分类" class="headerlink" title="Binlog的分类"></a>Binlog的分类</h4><blockquote>
+<p>  <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/8e7e288c41b1">参考博客</a></p>
+</blockquote>
+<p>binlog的格式也有三种：<code>STATEMENT</code>、<code>ROW</code>、<code>MIXED</code>。</p>
+<ul>
+<li><code>STATMENT</code>模式：基于SQL语句的复制(statement-based replication, SBR)，每一条会修改数据的sql语句会记录到binlog中。<br>  优点：不需要记录每一条SQL语句与每行的数据变化，这样子binlog的日志也会比较少，减少了磁盘IO，提高性能。<br>  缺点：在某些情况下会导致master-slave中的数据不一致(比如：<code>delete from t where a&gt;=4 and t_modified&lt;=&#39;2018-11-10&#39; limit 1;</code>在主库执行这个语句的时候，如果使用的是a索引，会删除<code>(4,4,&#39;2018-11-10&#39;)</code>这条记录，如果使用的是t_modified的索引则会删除<code>insert into t values(5,5,&#39;2018-11-09&#39;);</code>所以在执行这条sql语句的时候提示：<br>  <code>Unsafe statement written to the binary log using statement format since BINLOG_FORMAT = STATEMENT. The statement is unsafe because it uses a LIMIT clause. This is unsafe because the set of rows included cannot be predicted.</code><br>  由于 statement 格式下，记录到 binlog 里的是语句原文，因此可能会出现这样一种情况：在主库执行这条 SQL 语句的时候，用的是索引 a；而在备库执行这条 SQL 语句的时候，却使用了索引 t_modified。因此，MySQL 认为这样写是有风险的。<br>  <code>sleep()</code>函数， <code>last_insert_id()</code>，以及<code>user-defined functions(udf)</code>等也会出现问题)；</li>
+<li><code>ROW</code>基于行的复制(row-based replication, RBR)格式：不记录每一条SQL语句的上下文信息，仅需记录哪条数据被修改了，修改成了什么样子了。<br>  优点：不会出现某些特定情况下的存储过程、或function、或trigger的调用和触发无法被正确复制的问题。<br>  缺点：会产生大量的日志，尤其是alter table的时候会让日志暴涨。</li>
+<li>  <code>MIXED</code>混合模式复制(mixed-based replication, MBR)：以上两种模式的混合使用，一般的复制使用STATEMENT模式保存binlog，对于STATEMENT模式无法复制的操作使用ROW模式保存binlog，MySQL会根据执行的SQL语句选择日志保存方式。</li>
+</ul>
+<blockquote>
+<p>  可以看到<code>ROW</code>模式下，binlog日志中的begin和commit之间并没有sql语句。<br>  在<code>STATEMENT</code>模式下，binlog日志中的begin和commit之间是一条sql语句。</p>
+</blockquote>
+<h3 id="事务隔离级别"><a href="#事务隔离级别" class="headerlink" title="事务隔离级别"></a>事务隔离级别</h3><p>详情见：  <a href="../%E7%90%86%E8%AE%BA/%E6%9C%AC%E5%9C%B0%E4%BA%8B%E5%8A%A1.md">本地事务.md</a> </p>
+<h2 id="主从同步"><a href="#主从同步" class="headerlink" title="主从同步"></a>主从同步</h2><h3 id="主服务器配置"><a href="#主服务器配置" class="headerlink" title="主服务器配置"></a>主服务器配置</h3><p>配置：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$ vim my.cnf</span><br><span class="line">#主数据库端ID号</span><br><span class="line">server_id <span class="operator">=</span> <span class="number">1</span>           </span><br><span class="line"> #开启二进制日志                  </span><br><span class="line">log<span class="operator">-</span>bin <span class="operator">=</span> mysql<span class="operator">-</span>bin    </span><br><span class="line">#需要复制的数据库名，如果复制多个数据库，重复设置这个选项即可                  </span><br><span class="line">binlog<span class="operator">-</span>do<span class="operator">-</span>db <span class="operator">=</span> db        </span><br><span class="line">#将从服务器从主服务器收到的更新记入到从服务器自己的二进制日志文件中                 </span><br><span class="line">log<span class="operator">-</span>slave<span class="operator">-</span>updates                        </span><br><span class="line">#控制binlog的写入频率。每执行多少次事务写入一次(这个参数性能消耗很大，但可减小MySQL崩溃造成的损失) </span><br><span class="line">sync_binlog <span class="operator">=</span> <span class="number">1</span>                    </span><br><span class="line">#这个参数一般用在主主同步中，用来错开自增值, 防止键值冲突</span><br><span class="line">auto_increment_offset <span class="operator">=</span> <span class="number">1</span>           </span><br><span class="line">#这个参数一般用在主主同步中，用来错开自增值, 防止键值冲突</span><br><span class="line">auto_increment_increment <span class="operator">=</span> <span class="number">1</span>            </span><br><span class="line">#二进制日志自动删除的天数，默认值为<span class="number">0</span>,表示“没有自动删除”，启动时和二进制日志循环时可能删除  </span><br><span class="line">expire_logs_days <span class="operator">=</span> <span class="number">7</span>                    </span><br><span class="line">#将函数复制到slave  </span><br><span class="line">log_bin_trust_function_creators <span class="operator">=</span> <span class="number">1</span>  </span><br></pre></td></tr></table></figure>
+
+<p>授权：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 允许从服务器同步数据的账户 <span class="keyword">user</span> <span class="number">123456</span></span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">GRANT</span> replication slave <span class="keyword">ON</span> <span class="operator">*</span>.<span class="operator">*</span> <span class="keyword">TO</span> <span class="keyword">user</span>@<span class="string">&#x27;192.168.64.23&#x27;</span> IDENTIFIED <span class="keyword">BY</span> <span class="string">&#x27;123456&#x27;</span>;</span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">show</span> master status; # 查看主服务器状态，获取到日志名和偏移量</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>  <code>show master status</code>获取到日志名和偏移量，在从数据库启动后从这个点开始进行数据恢复。</p>
+</blockquote>
+<h3 id="从服务器配置"><a href="#从服务器配置" class="headerlink" title="从服务器配置"></a>从服务器配置</h3><p>配置：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ vim my.cnf</span><br><span class="line">server_id <span class="operator">=</span> <span class="number">2</span></span><br><span class="line">log<span class="operator">-</span>bin <span class="operator">=</span> mysql<span class="operator">-</span>bin</span><br><span class="line">log<span class="operator">-</span>slave<span class="operator">-</span>updates</span><br><span class="line">sync_binlog <span class="operator">=</span> <span class="number">0</span></span><br><span class="line">#log buffer将每秒一次地写入log file中，并且log file的flush(刷到磁盘)操作同时进行。该模式下在事务提交的时候，不会主动触发写入磁盘的操作</span><br><span class="line">innodb_flush_log_at_trx_commit <span class="operator">=</span> <span class="number">0</span>        </span><br><span class="line">#指定slave要复制哪个库</span><br><span class="line">replicate<span class="operator">-</span>do<span class="operator">-</span>db <span class="operator">=</span> db         </span><br><span class="line">#MySQL主从复制的时候，当Master和Slave之间的网络中断，但是Master和Slave无法察觉的情况下（比如防火墙或者路由问题）。Slave会等待slave_net_timeout设置的秒数后，才能认为网络出现故障，然后才会重连并且追赶这段时间主库的数据</span><br><span class="line">slave<span class="operator">-</span>net<span class="operator">-</span>timeout <span class="operator">=</span> <span class="number">60</span>                    </span><br><span class="line">log_bin_trust_function_creators <span class="operator">=</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>执行同步：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> change master <span class="keyword">to</span> master_user<span class="operator">=</span><span class="string">&#x27;user&#x27;</span>,   # 授权用户</span><br><span class="line">     <span class="operator">&gt;</span> master_password<span class="operator">=</span><span class="string">&#x27;123456&#x27;</span>,</span><br><span class="line">     <span class="operator">&gt;</span> master_host<span class="operator">=</span><span class="string">&#x27;192.168.64.23&#x27;</span>,           # 主服务器地址</span><br><span class="line">     <span class="operator">&gt;</span> master_log_file<span class="operator">=</span><span class="string">&#x27;mysql-bin.000003&#x27;</span>,    # 主服务器使用的二进制日志（）</span><br><span class="line">     <span class="operator">&gt;</span> master_log_pos<span class="operator">=</span><span class="string">&#x27;257&#x27;</span>;                  # 主服务器日志偏移量</span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">start</span> slave;                 # 开启同步    </span><br><span class="line"></span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">show</span> slave status\G;         # 查看从服务器的内容</span><br><span class="line"><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span> <span class="number">1.</span> <span class="type">row</span> <span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span></span><br><span class="line">               Slave_IO_State: Waiting <span class="keyword">for</span> master <span class="keyword">to</span> send event</span><br><span class="line">                  Master_Host: <span class="number">10.10</span><span class="number">.20</span><span class="number">.111</span></span><br><span class="line">                  Master_User: account</span><br><span class="line">                  Master_Port: <span class="number">3306</span></span><br><span class="line">                Connect_Retry: <span class="number">60</span></span><br><span class="line">              Master_Log_File: mysql<span class="operator">-</span>bin<span class="number">.000033</span></span><br><span class="line">          Read_Master_Log_Pos: <span class="number">337523</span></span><br><span class="line">               Relay_Log_File: db2<span class="operator">-</span>relay<span class="operator">-</span>bin<span class="number">.000002</span></span><br><span class="line">                Relay_Log_Pos: <span class="number">337686</span></span><br><span class="line">        Relay_Master_Log_File: mysql<span class="operator">-</span>bin<span class="number">.000033</span></span><br><span class="line">             Slave_IO_Running: Yes</span><br><span class="line">            Slave_SQL_Running: Yes</span><br><span class="line">              Replicate_Do_DB:</span><br><span class="line">          Replicate_Ignore_DB:</span><br><span class="line">          ...</span><br><span class="line"># Slave_IO_Running及Slave_SQL_Running进程必须正常运行，即Yes状态，否则说明同步失败</span><br></pre></td></tr></table></figure>
+
+<h2 id="其他配置"><a href="#其他配置" class="headerlink" title="其他配置"></a>其他配置</h2><h3 id="开启远程访问权限"><a href="#开启远程访问权限" class="headerlink" title="开启远程访问权限"></a>开启远程访问权限</h3><h4 id="一、开启mysql远程访问"><a href="#一、开启mysql远程访问" class="headerlink" title="一、开启mysql远程访问"></a>一、开启mysql远程访问</h4><p>授予用户user 密码 passwd 所有权限 所有主机IP可访问</p>
+<ul>
+<li>授权语句：Grant &lt;权限&gt; on 表名[(列名)] to 用户 With grant option或 GRANT &lt;权限&gt; ON &lt;数据对象&gt; FROM &lt;数据库用户&gt;</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRANT ALL PRIVILEGES ON *.* TO &#x27;user&#x27;@&#x27;%&#x27; IDENTIFIED BY &#x27;passwd&#x27; WITH GRANT OPTION;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>ALL PRIVILEGES表示所有权限，*.*表示所有数据库和表，<code>%</code>表示所有IP，WITH GRANT OPTION授予授权权限,如果想让授权的用户，也可以将这些权限 grant 给其他用户，需要选项 “grant option“。<br>  只能访问数据库gogs的所有权</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRANT ALL PRIVILEGES ON gogs.* TO &#x27;user2&#x27;@&#x27;%&#x27; IDENTIFIED BY &#x27;passwd2&#x27; WITH GRANT OPTION;</span><br></pre></td></tr></table></figure>
+
+<p>分别授予用户所有主机IP可访问，分别拥有增删改查权限</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">GRANT select ON *.* TO &#x27;user1&#x27;@&#x27;%&#x27; IDENTIFIED BY &#x27;passwd1&#x27; WITH GRANT OPTION;</span><br><span class="line">GRANT insert ON *.* TO &#x27;user2&#x27;@&#x27;%&#x27; IDENTIFIED BY &#x27;passwd2&#x27; WITH GRANT OPTION;</span><br><span class="line">GRANT updata ON *.* TO &#x27;user3&#x27;@&#x27;%&#x27; IDENTIFIED BY &#x27;passwd3&#x27; WITH GRANT OPTION;</span><br><span class="line">GRANT delete ON *.* TO &#x27;user4&#x27;@&#x27;%&#x27; IDENTIFIED BY &#x27;passwd4&#x27; WITH GRANT OPTION;</span><br></pre></td></tr></table></figure>
+
+<p>查询用户具有的权限,因为只给了查询权限，所以只有Select_priv: Y。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; GRANT select ON *.* TO &#x27;user&#x27;@&#x27;%&#x27; IDENTIFIED BY &#x27;passwd&#x27; WITH GRANT OPTION;</span><br><span class="line">Query OK, 0 rows affected, 1 warning (0.02 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from mysql.user where user=&#x27;user&#x27;\G;</span><br><span class="line">*************************** 1. row ***************************</span><br><span class="line">                  Host: %</span><br><span class="line">                  User: user</span><br><span class="line">           Select_priv: Y</span><br><span class="line">           Insert_priv: N</span><br><span class="line">           Update_priv: N</span><br><span class="line">           Delete_priv: N</span><br><span class="line">           Create_priv: N</span><br><span class="line">             Drop_priv: N</span><br><span class="line">       </span><br><span class="line">1 row in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">ERROR: </span><br><span class="line">No query specified</span><br></pre></td></tr></table></figure>
+
+<h4 id="二、撤销已经赋予给-MySQL-用户权限的权限。"><a href="#二、撤销已经赋予给-MySQL-用户权限的权限。" class="headerlink" title="二、撤销已经赋予给 MySQL 用户权限的权限。"></a>二、撤销已经赋予给 MySQL 用户权限的权限。</h4><p>revoke 跟 grant 的语法差不多，只需要把关键字 “to” 换成 “from” 即可：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">grant all on *.* to dba@localhost;</span><br><span class="line"></span><br><span class="line">revoke all on *.* from dba@localhost; </span><br></pre></td></tr></table></figure>
+
+<p>grant, revoke 用户权限后，该用户只有重新连接 MySQL 数据库，权限才能生效。<br>###三、对数据库开启只读权限，用于数据库热备份<br>1、 对于MySQL单实例数据库和master库，如果需要设置为只读状态，需要进行如下操作和设置：<br>将MySQL设置为只读状态的命令:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show global variables like &quot;%read_only%&quot;;</span><br><span class="line">mysql&gt; flush tables with read lock;</span><br><span class="line">mysql&gt; set global read_only=1;</span><br><span class="line">mysql&gt; show global variables like &quot;%read_only%&quot;;</span><br></pre></td></tr></table></figure>
+
+<p>将MySQL从只读状态设置为读写状态的命令:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; unlock tables;</span><br><span class="line">mysql&gt; set global read_only=0;</span><br></pre></td></tr></table></figure>
+
+<p>2)、对于需要保证master-slave主从同步的salve库<br>将slave从库设置为只读状态，需要执行的命令为:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; set global read_only=1;</span><br></pre></td></tr></table></figure>
+
+<p>将salve库从只读状态变为读写状态，需要执行的命令是:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; set global read_only=0;</span><br></pre></td></tr></table></figure>
+
+<h3 id="授权"><a href="#授权" class="headerlink" title="授权"></a>授权</h3><h4 id="授权格式："><a href="#授权格式：" class="headerlink" title="授权格式："></a>授权格式：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRANT &lt;privileges&gt; ON &lt;dbName.tableName&gt;  TO &lt;user&gt; [IDENTIFIED BY &quot;&lt;password&gt;&quot;]  [WITH GRANT OPTION];</span><br></pre></td></tr></table></figure>
+
+<h4 id="授权参数讲解："><a href="#授权参数讲解：" class="headerlink" title="授权参数讲解："></a>授权参数讲解：</h4><p><strong>privilegesCode</strong>表示授予的权限类型，常用的有以下几种类型：</p>
+<ul>
+<li>all privileges：所有权限。</li>
+<li>select：读取权限。</li>
+<li>delete：删除权限。</li>
+<li>update：更新权限。</li>
+<li>create：创建权限。</li>
+<li>drop：删除数据库、数据表权限。</li>
+</ul>
+<p><strong>dbName.tableName</strong>表示授予权限的具体库或表，常用的有以下几种选项：</p>
+<ul>
+<li>```<br>  *.*：授予该数据库服务器所有数据库的权限。  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- dbName.*：授予dbName数据库所有表的权限。</span><br><span class="line"></span><br><span class="line">- dbName.dbTable：授予数据库dbName中dbTable表的权限。</span><br><span class="line"></span><br><span class="line">`username@host`表示授予的用户以及允许该用户登录的IP地址。其中Host有以下几种类型：</span><br><span class="line"></span><br><span class="line">- **localhost：**只允许该用户在本地登录，不能远程登录。</span><br><span class="line">- **%：**允许在除本机之外的任何一台机器远程登录。</span><br><span class="line">- **192.168.52.32：**具体的IP表示只允许该用户从特定IP登录。</span><br><span class="line"></span><br><span class="line">**password**指定该用户登录时的面。</span><br><span class="line"></span><br><span class="line">**flush privileges**表示刷新权限变更。</span><br><span class="line"></span><br><span class="line">#### 1、查看所有用户以及授权主机</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+mysql&gt; select User,Host from mysql.user;</li>
+</ul>
+<p>+——–+———–+<br>| User   | Host      |<br>+——–+———–+<br>| user2  | %         |<br>| zabbix | %         |<br>| root   | localhost |<br>+——–+———–+<br>5 rows in set (0.00 sec)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### 2、查看某个用户的授权情况</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>mysql&gt; show grants for ‘root‘@’localhost’;<br>+———————————————————————+<br>| Grants for root@localhost                                           |<br>+———————————————————————+<br>| GRANT ALL PRIVILEGES ON <em>.</em> TO ‘root‘@’localhost’ WITH GRANT OPTION |<br>| GRANT PROXY ON ‘‘@’’ TO ‘root‘@’localhost’ WITH GRANT OPTION        |<br>+———————————————————————+<br>2 rows in set (0.00 sec)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">或者</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>mysql&gt; show grants for ‘zabbix‘@’%’;<br>+————————————+<br>| Grants for zabbix@%                |<br>+————————————+<br>| GRANT USAGE ON <em>.</em> TO ‘zabbix‘@’%’ |<br>+————————————+<br>1 row in set (0.00 sec)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### 3、授权</span><br><span class="line"></span><br><span class="line">- 授权所有权限</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>GRANT ALL PRIVILEGES ON <em>.</em> TO ‘user‘@’%’ IDENTIFIED BY ‘passwd’ WITH GRANT OPTION;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- 授权单个gogs库权限</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>GRANT ALL PRIVILEGES ON gogs.* TO ‘user2‘@’%’ IDENTIFIED BY ‘passwd2’;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- 授权单个user表权限</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>GRANT ALL PRIVILEGES ON gogs.user TO ‘user2‘@’%’ IDENTIFIED BY ‘passwd2’ WITH GRANT OPTION;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- 单独授权增删改查权限，而不是所有权限</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>grant select, insert, update, delete on gogs.* to user@’%’；</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- 授权某个固定主机权限</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>grant select, insert, update, delete on gogs.* to user@’172.16.3.200’；</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### 4、取消授权</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>revoke ALL PRIVILEGES ON <em>.</em> from ‘user‘@’%’;<br>flush  privileges;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### 5、删除用户</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>drop user user@”%”;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 快速到出大量数据</span><br><span class="line"></span><br><span class="line">一、导出数据</span><br><span class="line"></span><br><span class="line">1、mysqldump</span><br><span class="line"></span><br><span class="line">2、重命名压缩</span><br><span class="line"></span><br><span class="line">3、scp传输</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>scp msn.sql.zip <a href="mailto:&#x72;&#x6f;&#111;&#x74;&#x40;&#49;&#55;&#50;&#46;&#49;&#48;&#53;&#46;&#x78;&#120;&#46;&#x78;&#120;">&#x72;&#x6f;&#111;&#x74;&#x40;&#49;&#55;&#50;&#46;&#49;&#48;&#53;&#46;&#x78;&#120;&#46;&#x78;&#120;</a>:/root/</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">二、导入数据</span><br><span class="line"></span><br><span class="line">1、解压</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>unzip msn.sql.zip</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">2、连接数据库</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>mysql -umsn_block -p password<br>mysql -umsn_mall -p  password</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">3、设置参数</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>#设置参数<br>set autocommit=0;<br>use msn_block;<br>START TRANSACTION;<br>#导入数据库<br>source /root/msn.sql;<br>#提交事务<br>COMMIT;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 单机备份</span><br><span class="line"></span><br><span class="line">mybackup.conf</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>username=数据库用户名<br>password=数据库密码<br>backupnode=full<br>（备份方式）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">myback.sh</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>#/usr/bin/env bash<br>BASEDIR=”/home”<br>username=<code>cat $&#123;BASEDIR&#125;/mybackup.conf | grep &quot;username&quot; | awk -F &#39;=&#39; &#39;&#123;print $2&#125;&#39;</code><br>password=<code>cat $&#123;BASEDIR&#125;/mybackup.conf | grep &quot;password&quot; | awk -F &#39;=&#39; &#39;&#123;print $2&#125;&#39;</code><br>time=<code>date +%Y_%m_%d_%H_%M_%S</code><br>db_name=new_retail_back<br>dbname=pro_wallet_back<br>#db=fitment_back<br>#dbb=wjjx_pro_wallet_back<br>dbyqf=yqf_back<br>dbdmk=duoduoke<br>dbgw=buhuo3<br>dbwz=web_duomaike<br>dbbhpro=buhuopro<br>backupdir=”/mnt/data/mysql”<br>echo “username and password”<br>echo ${username}<br>echo ${password}<br>echo “begin to backup”<br>#mysqldump -hlocalhost -u${username} -p${password} -F –databases new_retail | gzip &gt; $backupdir/$db_name$time.sql.gz<br>mysqldump -hlocalhost -u${username} -p${password} –databases pro_wallet | gzip &gt; $backupdir/$dbname$time.sql.gz<br>mysqldump -hlocalhost -u${username} -p${password} –databases yqf | gzip &gt; $backupdir/$dbyqf$time.sql.gz<br>mysqldump -hlocalhost -u${username} -p${password} –databases duoduoke | gzip &gt; $backupdir/$dbdmk$time.sql.gz<br>mysqldump -hlocalhost -u${username} -p${password} –databases buhuo3 | gzip &gt; $backupdir/$dbgw$time.sql.gz<br>mysqldump -hlocalhost -u${username} -p${password} –databases web_duomaike | gzip &gt; $backupdir/$dbwz$time.sql.gz<br>mysqldump -hlocalhost -u${username} -p${password} –databases buhuopro | gzip &gt; $backupdir/$dbbhpro$time.sql.gz<br>#删除三天之前的备份<br>#find /home/data/mysql -name $db_name”<em>.sql.gz” -type f -mtime 2 -exec rm -rf {} ; &gt; /dev/null 2&gt;&amp;1<br>find /mnt/data/mysql -name $dbname”</em>.sql.gz” -type f -mtime 2 -exec rm -rf {} ; &gt; /dev/null 2&gt;&amp;1<br>find /mnt/data/mysql -name $dbyqf”<em>.sql.gz” -type f -mtime 2 -exec rm -rf {} ; &gt; /dev/null 2&gt;&amp;1<br>find /mnt/data/mysql -name $dbdmk”</em>.sql.gz” -type f -mtime 2 -exec rm -rf {} ; &gt; /dev/null 2&gt;&amp;1<br>find /mnt/data/mysql -name $dbgw”<em>.sql.gz” -type f -mtime 2 -exec rm -rf {} ; &gt; /dev/null 2&gt;&amp;1<br>find /mnt/data/mysql -name $dbwz”</em>.sql.gz” -type f -mtime 2 -exec rm -rf {} ; &gt; /dev/null 2&gt;&amp;1<br>find /mnt/data/mysql -name $dbbhpro”<em>.sql.gz” -type f -mtime 2 -exec rm -rf {} ; &gt; /dev/null 2&gt;&amp;1<br>#删除一分钟之前的备份<br>#find $backup_dir -name $db_name”</em>.sql.gz” -type f -mmin +1 -exec rm -rf {} ; &gt; /dev/null 2&gt;&amp;1</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">异地备份</span><br><span class="line">remote_backup.sh</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>#！bin/bash<br>#The author : RoES<br>#date:2019/6/3<br>#Used for:mysql remote_backup<br>#用于数据库异地备份</p>
+<p>basefile=/mnt/data/mysql/<br>ip=112.74.53.175</p>
+<p>date<br>echo “becoming remote_backup”<br>echo “—start backup——-“<br>rsync -avz /mnt/data/mysql/* <a href="mailto:&#x72;&#111;&#111;&#x74;&#64;&#x31;&#x31;&#x32;&#x2e;&#55;&#x34;&#x2e;&#x35;&#x33;&#46;&#49;&#x37;&#53;">&#x72;&#111;&#111;&#x74;&#64;&#x31;&#x31;&#x32;&#x2e;&#55;&#x34;&#x2e;&#x35;&#x33;&#46;&#49;&#x37;&#53;</a>:/home/data/mysql/<br>echo “backup complete”<br>exit $?</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### binlog日志</span><br><span class="line"></span><br><span class="line">#### 1、显示mysqlbinlog日志是否开启，以及存储位置</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>show variables like ‘log_%’;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### 2、查看所有binlog日志列表</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>mysql&gt; show master logs;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### 3、查看master状态，即最后(最新)一个binlog日志的编号名称，及其最后一个操作事件pos结束点(Position)值</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>mysql&gt; show master status;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### 4、刷新log日志，自此刻开始产生一个新编号的binlog日志文件</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>mysql&gt; flush logs;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">注：每当mysqld服务重启时，会自动执行此命令，刷新binlog日志；在mysqldump备份数据时加 -F 选项也会刷新binlog日志；</span><br><span class="line"></span><br><span class="line">#### 5、重置(清空)所有binlog日志</span><br><span class="line"></span><br><span class="line">**此命令切勿随便执行。**</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>mysql&gt; reset master;</p>
+<pre><code>
+</code></pre>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Mysql/" rel="tag"># Mysql</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/1c53488ae6ac/" rel="prev" title="Cglib和Jdk动态代理">
+                  <i class="fa fa-chevron-left"></i> Cglib和Jdk动态代理
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/7f180a5a20f2/" rel="next" title="Hello World">
+                  Hello World <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeremyhzf</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"jeremyhzf","repo":"jeremyhzf.github.io","client_id":"42c0ba09a8c80255b96d","client_secret":"dfc2f6da92606883935a99606e4bd251d205c88a","admin_user":"jeremyhzf","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"092766b535690ff7f02ca80095d55331"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>
