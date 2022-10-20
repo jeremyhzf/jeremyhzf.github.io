@@ -1,1 +1,599 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><meta name="theme-color" content="#222" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.2"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png"><link rel="mask-icon" href="/images/logo.svg" color="#222"><meta name="google-site-verification" content="UMgeGAOIi3I5Ncgc_2ZRy-AIufQL7eZNutKIai7M5g8"><meta name="baidu-site-verification" content="code-sZmaqxmBhP"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous"><script class="next-config" data-name="main" type="application/json">{"hostname":"jeremyhzf.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.13.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":true,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script><meta name="description" content="一、概念数据建模简单来说就是基于对业务的理解，将各种数据进行整合和关联，并最终使得这些数据可用性，可读性增强，让使用方能快速的获取到自己关心的有价值的信息并且及时的作出响应。"><meta property="og:type" content="article"><meta property="og:title" content="数仓建模"><meta property="og:url" content="https://jeremyhzf.com/2021/725ecf34411d/index.html"><meta property="og:site_name" content="Jeremy"><meta property="og:description" content="一、概念数据建模简单来说就是基于对业务的理解，将各种数据进行整合和关联，并最终使得这些数据可用性，可读性增强，让使用方能快速的获取到自己关心的有价值的信息并且及时的作出响应。"><meta property="og:locale" content="zh_CN"><meta property="article:published_time" content="2021-01-14T11:38:37.000Z"><meta property="article:modified_time" content="2021-01-14T11:38:37.000Z"><meta property="article:author" content="Jeremyhzf"><meta property="article:tag" content="理论"><meta name="twitter:card" content="summary"><link rel="canonical" href="https://jeremyhzf.com/2021/725ecf34411d/"><script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://jeremyhzf.com/2021/725ecf34411d/","path":"2021/725ecf34411d/","title":"数仓建模"}</script><script class="next-config" data-name="calendar" type="application/json">""</script><title>数仓建模 | Jeremy</title><noscript><link rel="stylesheet" href="/css/noscript.css"></noscript></head><body itemscope itemtype="http://schema.org/WebPage"><div class="headband"></div><main class="main"><header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-container"><div class="site-nav-toggle"><div class="toggle" aria-label="切换导航栏" role="button"><span class="toggle-line"></span> <span class="toggle-line"></span> <span class="toggle-line"></span></div></div><div class="site-meta"><a href="/" class="brand" rel="start"><i class="logo-line"></i><p class="site-title">Jeremy</p><i class="logo-line"></i></a><p class="site-subtitle" itemprop="description">分享技术与生活</p></div><div class="site-nav-right"><div class="toggle popup-trigger"></div></div></div><nav class="site-nav"><ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li></ul></nav></div><div class="toggle sidebar-toggle" role="button"><span class="toggle-line"></span> <span class="toggle-line"></span> <span class="toggle-line"></span></div><aside class="sidebar"><div class="sidebar-inner sidebar-nav-active sidebar-toc-active"><ul class="sidebar-nav"><li class="sidebar-nav-toc">文章目录</li><li class="sidebar-nav-overview">站点概览</li></ul><div class="sidebar-panel-container"><div class="post-toc-wrap sidebar-panel"><div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%A6%82%E5%BF%B5"><span class="nav-text">一、概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E7%9B%AE%E7%9A%84"><span class="nav-text">二、目的</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%95%B0%E6%8D%AE%E5%BB%BA%E6%A8%A1%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="nav-text">三、数据建模的几种方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-ER%E6%A8%A1%E5%9E%8B-%E8%8C%83%E5%BC%8F%E5%BB%BA%E6%A8%A1"><span class="nav-text">1.ER模型(范式建模)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E7%BB%B4%E5%BA%A6%E5%BB%BA%E6%A8%A1"><span class="nav-text">2.维度建模</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%B4%E5%BA%A6%E5%BB%BA%E6%A8%A1%E7%9A%84%E5%88%86%E7%B1%BB"><span class="nav-text">维度建模的分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%B4%E5%BA%A6%E8%A1%A8"><span class="nav-text">维度表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E5%AE%9E%E8%A1%A8"><span class="nav-text">事实表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%B4%E5%BA%A6%E8%A1%A8%E5%92%8C%E4%BA%8B%E5%AE%9E%E8%A1%A8%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-text">维度表和事实表的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Data-Vault%E6%A8%A1%E5%9E%8B"><span class="nav-text">3.Data Vault模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Anchor%E6%A8%A1%E5%9E%8B"><span class="nav-text">4.Anchor模型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%9B%9B%E7%A7%8D%E5%BB%BA%E6%A8%A1%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93"><span class="nav-text">四、四种建模方法总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E6%A8%A1%E5%9E%8B%E5%88%86%E5%B1%82"><span class="nav-text">五、模型分层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-ods%E5%B1%82"><span class="nav-text">1. ods层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-cdm%E5%B1%82"><span class="nav-text">2. cdm层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-ads%E5%B1%82"><span class="nav-text">3. ads层</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E4%B8%9A%E5%8A%A1%E8%AE%BE%E8%AE%A1%E6%B5%81%E7%A8%8B"><span class="nav-text">六、业务设计流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E5%88%86%E5%B1%82%E7%9A%84%E5%A5%BD%E5%A4%84"><span class="nav-text">六、分层的好处</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%EF%BC%9A"><span class="nav-text">参考：</span></a></li></div></div><div class="site-overview-wrap sidebar-panel"><div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="site-author-image" itemprop="image" alt="Jeremyhzf" src="https://avatars.githubusercontent.com/u/49558849"><p class="site-author-name" itemprop="name">Jeremyhzf</p><div class="site-description" itemprop="description"></div></div><div class="site-state-wrap site-overview-item animated"><nav class="site-state"><div class="site-state-item site-state-posts"><a href="/archives/"><span class="site-state-item-count">21</span> <span class="site-state-item-name">日志</span></a></div><div class="site-state-item site-state-categories"><a href="/categories/"><span class="site-state-item-count">20</span> <span class="site-state-item-name">分类</span></a></div><div class="site-state-item site-state-tags"><a href="/tags/"><span class="site-state-item-count">14</span> <span class="site-state-item-name">标签</span></a></div></nav></div><div class="links-of-author site-overview-item animated"><span class="links-of-author-item"><a href="https://github.com/jeremyhzf" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeremyhzf" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a> </span><span class="links-of-author-item"><a href="mailto:jeremyhzf@gmail.com" title="E-Mail → mailto:jeremyhzf@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a></span></div></div></div><div class="back-to-top animated" role="button" aria-label="返回顶部"><i class="fa fa-arrow-up"></i> <span>0%</span></div></div></aside><div class="sidebar-dimmer"></div></header><div class="reading-progress-bar"></div><a href="https://github.com/jeremyhzf" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin:130px 106px" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><noscript><div class="noscript-warning">Theme NexT works best with JavaScript enabled</div></noscript><div class="main-inner post posts-expand"><div class="post-block"><article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN"><link itemprop="mainEntityOfPage" href="https://jeremyhzf.com/2021/725ecf34411d/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="image" content="https://avatars.githubusercontent.com/u/49558849"><meta itemprop="name" content="Jeremyhzf"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Jeremy"><meta itemprop="description" content=""></span><span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork"><meta itemprop="name" content="数仓建模 | Jeremy"><meta itemprop="description" content=""></span><header class="post-header"><h1 class="post-title" itemprop="name headline">数仓建模</h1><div class="post-meta-container"><div class="post-meta"><span class="post-meta-item"><span class="post-meta-item-icon"><i class="far fa-calendar"></i> </span><span class="post-meta-item-text">发表于</span> <time title="创建时间：2021-01-14 19:38:37" itemprop="dateCreated datePublished" datetime="2021-01-14T19:38:37+08:00">2021-01-14</time> </span><span class="post-meta-item"><span class="post-meta-item-icon"><i class="far fa-folder"></i> </span><span class="post-meta-item-text">分类于</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Bigdata/" itemprop="url" rel="index"><span itemprop="name">Bigdata</span></a> </span>， <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/%E7%90%86%E8%AE%BA/" itemprop="url" rel="index"><span itemprop="name">理论</span></a> </span></span><span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv"><span class="post-meta-item-icon"><i class="far fa-eye"></i> </span><span class="post-meta-item-text">阅读次数：</span> <span id="busuanzi_value_page_pv"></span></span></div></div></header><div class="post-body" itemprop="articleBody"><h1 id="一、概念"><a href="#一、概念" class="headerlink" title="一、概念"></a>一、概念</h1><p>数据建模简单来说就是基于对业务的理解，将各种数据进行整合和关联，并最终使得这些数据可用性，可读性增强，让使用方能快速的获取到自己关心的有价值的信息并且及时的作出响应。</p><span id="more"></span><h1 id="二、目的"><a href="#二、目的" class="headerlink" title="二、目的"></a>二、目的</h1><p>大数据的数仓建模是通过建模的方法更好的组织、存储数据，以便在 性能、成本、效率和数据质量之间找到最佳平衡点。一般主要从下面四点考虑：</p><ol><li>高性能：能够快速查询所需的数据，减少数据I/O</li><li>低成本：减少不必要的数据冗余和重复计算，实现计算结果数据复用，降低存储成本和计算成本。</li><li>高效率：改善用户应用体验，提高使用数据的效率。</li><li>高质量：改善数据统计口径的不一致性，减少数据计算错误的可能性，提供高质量的、一致的数据访问平台。</li></ol><h1 id="三、数据建模的几种方式"><a href="#三、数据建模的几种方式" class="headerlink" title="三、数据建模的几种方式"></a>三、数据建模的几种方式</h1><h2 id="1-ER模型-范式建模"><a href="#1-ER模型-范式建模" class="headerlink" title="1.ER模型(范式建模)"></a>1.ER模型(范式建模)</h2><blockquote><ul><li>1NF：属性不可再分割（例如不能存在5台电脑的属性，坏处：表都没法用）</li><li>2NF：不能存在部分函数依赖（例如主键（学号+课名）–&gt;成绩，姓名，但学号–》姓名，所以姓名部分依赖于主键（学号+课名），所以要去除，坏处：数据冗余）</li><li>3NF：不能存在传递函数依赖（学号–》宿舍种类–》价钱，坏处：数据冗余和增删异常）</li></ul></blockquote><p><strong>MySQL关系模型</strong>：关系模型主要应用与OLTP系统中，为了保证数据的一致性以及避免冗余，所以大部分业务系统的表都是遵循第三范式的。</p><p><strong>Hive 维度模型</strong>：维度模型主要应用于OLAP系统中，因为关系模型虽然冗余少，</p><p>但是在大规模数据，跨表分析统计查询过程中，会造成多表关联，这会大大降低执行效率。</p><p>所以HIVE把相关各种表整理成两种：<strong>事实表和维度表</strong>两种。所有维度表围绕着事实表进行解释。</p><h2 id="2-维度建模"><a href="#2-维度建模" class="headerlink" title="2.维度建模"></a>2.维度建模</h2><h3 id="维度建模的分类"><a href="#维度建模的分类" class="headerlink" title="维度建模的分类"></a>维度建模的分类</h3><p>维度建模按数据组织类型划分可分为<strong>星型模型、雪花模型、星座模型</strong></p><p>星型模型（事实表+一级维度表），雪花（事实表+多级维度），星座模型（星型模型+多个事实表）</p><h3 id="维度表"><a href="#维度表" class="headerlink" title="维度表"></a>维度表</h3><p>一般是对事实的<strong>描述信息</strong>。每一张维表对应现实世界中的一个对象或者概念。 例如：用户、商品、日期、地区等。</p><h3 id="事实表"><a href="#事实表" class="headerlink" title="事实表"></a>事实表</h3><p>事实表作为数据仓库维度建模的核心，紧紧围绕着业务过程来设计。其包含与该业务过程有关的维度引用（维度表外键）以及该业务过程的度量（通常是可累加的数字类型字段）。</p><p>事实包含业务的度量，是定量的数据，如销售价格、销售数量、距离、速度、重量等是事实。</p><p><strong>事实表分类：</strong></p><ol><li><strong>事务型事实表</strong>: 事务事实表用来记录事务层面的事实（例如交易流水值、销售数量等），它保存的是各业务过程的原子操作事件，即最细粒度的操作事件。其数据在事务发生后发生，粒度为每一行数据。一旦数据写入成功，数据就不再进行更改，其更新方式为<strong>增量更新</strong>。</li><li><strong>周期型快照事实表</strong>: 周期快照事实表以具有规律性的、可预见的时间间隔来记录事实，主要用于分析一些存量型（例如商品库存，账户余额）或者状态型（空气温度，行驶速度）指标。</li><li><strong>累积型快照事实表</strong>: <strong>累计快照事实表用于跟踪业务事实的变化。</strong>累计快照事实表是基于一个业务流程中的多个关键业务过程联合处理而构建的事实表，例如，数据仓库中可能需要累积或者存储订单从下订单开始，到订单商品被打包、运输、和签收的各个业务阶段的时间点数据来跟踪订单声明周期的进展情况。当这个业务过程进行时，事实表的记录也要不断更新。</li></ol><p><strong>事实类型：</strong></p><p>此处的事实类型是指<strong>度量值的类型</strong>，而非事实表的类型。事实（度量值）共分为三类，分别是可加事实，半可加事实和不可加事实。</p><ol><li>可加事实</li></ol><p>可加事实是指可以按照与事实表相关的所有维度进行累加，例如事务型事实表中的事实。</p><ol start="2"><li>半可加事实</li></ol><p>半可加事实是指只能按照与事实表相关的一部分维度进行累加，例如周期型快照事实表中的事实。以上述各仓库中各商品的库存每天快照事实表为例，这张表中的库存事实可以按照仓库或者商品维度进行累加，但是不能按照时间维度进行累加，因为将每天的库存累加起来是没有任何意义的。</p><ol start="3"><li>不可加事实</li></ol><p>不可加事实是指完全不具备可加性，例如比率型事实。不可加事实通常需要转化为可加事实，例如比率可转化为分子和分母。</p><table><thead><tr><th>特点</th><th>事务型事实表</th><th>周期快照事实表</th><th>累积快照事实表</th></tr></thead><tbody><tr><td>时间/时期</td><td>离散事务时间点</td><td>有规律、可预测的间隔产生快照</td><td>时间跨度不确定的不断变化的工作流</td></tr><tr><td>粒度</td><td>每行代表实体的一个事务</td><td>每行代表一个时间周期的某个实体</td><td>每行代表实体的一个业务周期</td></tr><tr><td>事实表加载</td><td>新增</td><td>新增</td><td>新增和修改</td></tr><tr><td>事实表更新</td><td>不更新</td><td>不更新</td><td>业务过程变更时更新</td></tr><tr><td>时间维</td><td>业务日期</td><td>时期末</td><td>相关业务过程事实和时间间隔事实</td></tr><tr><td>事实</td><td>事务事实</td><td>累计事实</td><td>限定多个业务阶段内的绩效</td></tr><tr><td>举例</td><td>交易流水</td><td>每个时间段的库存数据</td><td>交易流程中下单、支付、发货、确认收货业务过程</td></tr></tbody></table><h3 id="维度表和事实表的区别"><a href="#维度表和事实表的区别" class="headerlink" title="维度表和事实表的区别"></a>维度表和事实表的区别</h3><ol><li>事实表就是你要关注的内容。</li><li>维度表就是你观察该事务的角度，是从哪个角度去观察这个内容的。</li></ol><p>​ 例如，某地区商品的销量，是从地区这个角度观察商品销量的。事实表就是销量表(指标)，维度表就是地区表(维度)。</p><p><strong>同步策略</strong>：</p><ol><li>维度表，每日全量或者每月（更长时间）全量</li><li>事务型事实表：每日增量</li><li>周期性事实表：拉链表(或者全量表)</li></ol><h2 id="3-Data-Vault模型"><a href="#3-Data-Vault模型" class="headerlink" title="3.Data Vault模型"></a>3.Data Vault模型</h2><p>Data Vault Dan Linstedt 发起创建的一种模型，它是模型的衍生，其设计的出发点也是为了实现数据的整合，但不能直接用于数据分析决策。它强调建立一个可审计的基础数据层，也就是强调数据的历史性、可追溯性和原子性，而不要求对数据进行过度的一致性处理和整合；</p><p>同时它基于主题概念将企业数据进行结构化组织，并引入了更进一步的范式处理来优化模型，以应对源系统变更的扩展性。Data Vault 型由以下几部分组成。</p><p>• Hub ：是企业的核心业务实体，由 实体 key 、数据仓库序列代理键、装载时间、数据来源组成。</p><p>• Link ：代表 Hub 之间的关系。这里与 模型最大的区别是将关系作为一个独立的单元抽象，可以提升模型的扩展性。它可以直</p><p>接描述 1:1 1:n n:n 的关系，而不需要做任何变更。它由 Hub 的代理键、装载时间、数据来源组成。</p><p>• Satellite ：是 Hub 的详细描述内容， 一个 Hub 可以有多个 Satellite它由 Hub 的代理键、装载时间、来源类型、详细的 Hub 描述信息组成。</p><p>Data Vault 模型比 ER 模型更容易设计和产出，它的 ETL 加工可实现配置化。</p><h2 id="4-Anchor模型"><a href="#4-Anchor模型" class="headerlink" title="4.Anchor模型"></a>4.Anchor模型</h2><h1 id="四、四种建模方法总结"><a href="#四、四种建模方法总结" class="headerlink" title="四、四种建模方法总结"></a>四、四种建模方法总结</h1><p>以上为四种基本的建模方法，当前主流建模方法为： ER模型、维度模型</p><ol><li>ER模型常用于OLTP数据库建模，应用到构建数仓时更偏重数据整合， 站在企业整体考虑，将各个系统的数据按相似性一致性、合并处理，为 数据分析、决策服务，但并不便于直接用来支持分析。缺陷：需要全面梳理企业所有的业务和数据流，周期长，人员要求高。</li><li>维度建模是面向分析场景而生，针对分析场景构建数仓模型；重点关注快 速、灵活的解决分析需求，同时能够提供大规模数据的快速响应性能。针对性 强，主要应用于数据仓库构建和OLAP引擎低层数据模型。优点：不需要完整的梳理企业业务流程和数据，实施周期根据主题边界而定，容易快速实现demo</li><li>数仓模型的选择是灵活的，不局限于某一种模型方法</li><li>数仓模型的设计也是灵活的，以实际需求场景为导向</li><li>模型设计要兼顾灵活性、可扩展，而对终端用户透明性</li><li>模型设计要考虑技术可靠性和实现成本</li></ol><h1 id="五、模型分层"><a href="#五、模型分层" class="headerlink" title="五、模型分层"></a>五、模型分层</h1><blockquote><p>数据仓库一般分为三层，自上而下分别为数据贴源层（ODS，Operation Data Store）、数据公共层（CDM，Common Data Model）和数据应用层（ADS，Application Data Service）。</p></blockquote><h3 id="1-ods层"><a href="#1-ods层" class="headerlink" title="1. ods层"></a>1. ods层</h3><ol><li>保持数据原貌不做任何修改，起到备份数据的作用。</li><li>数据采用压缩，减少磁盘存储空间（例如：原始数据100G，可以压缩到10G左右）</li><li>创建分区表，防止后续的全表扫描</li></ol><h3 id="2-cdm层"><a href="#2-cdm层" class="headerlink" title="2. cdm层"></a>2. cdm层</h3><blockquote><p><strong>维度建模一般按照以下四个步骤： 选择业务过程→声明粒度→确认维度→确认事实</strong></p></blockquote><p>数据公共层CDM（Common Data Model，又称通用数据模型层），包括DIM维度表、DWD,DW和DWS，由ODS层数据加工而成。主要完成数据加工与整合，建立一致性的维度，构建可复用的面向分析和统计的明细事实表，以及汇总公共粒度的指标</p><ul><li>公共维度层（DIM）：基于维度建模理念思想，建立企业一致性维度。<strong>降低数据计算口径和算法不统一风险</strong>。 公共维度层的表通常也被称为逻辑维度表，维度和维度逻 辑表通常一一对应。</li><li>明细粒度事实层（DWD）：对数据进行<strong>规范化编码转换</strong>，<strong>清洗</strong>，<strong>统一格式</strong>，<strong>脱敏</strong>等，不做横向整合</li><li>主题宽表层(DW) ：对dwd各种信息进行整合，输出主题宽表(面 向业务过 程，不同业务过程的信息不冗余建设，采用外键形式)</li><li>公共汇总粒度事实层（DWS）：以分析的主题对象作为建模驱动，基于上层的应用和产品的指标需求，构建公共粒度的汇总指标事实表，以宽表化手段物理化模型。构建命名规范、口径一致的统计指标，为上层提供公共指标，建立汇总宽表、明细事实表。</li></ul><p>公共汇总粒度事实层的表通常也被称为汇总逻辑表，用于存放派生指标数据。</p><h3 id="3-ads层"><a href="#3-ads层" class="headerlink" title="3. ads层"></a>3. ads层</h3><p>数据应用层ADS（Application Data Service）：面向业务需求定制开发，存放数据产品个性化的统计指标数据。</p><h1 id="六、业务设计流程"><a href="#六、业务设计流程" class="headerlink" title="六、业务设计流程"></a>六、业务设计流程</h1><p><strong>选择业务过程→声明粒度→确认维度→确认事实。</strong></p><h1 id="六、分层的好处"><a href="#六、分层的好处" class="headerlink" title="六、分层的好处"></a>六、分层的好处</h1><ol><li>清晰数据结构：每一个数据分层都有它的作用域，这样我们在使用表的时候能更方便地定位和理解。</li><li>数据血缘追踪：简单来讲可以这样理解，我们最终给业务呈现的是一张能直接使用的张业务表，但是它的来源有很多，如果有一张来源表出问题了，我们希望能够快速准确地定位到问题，并清楚它的危害范围。</li><li>减少重复开发：规范数据分层，开发一些通用的中间层数据，能够减少极大的重复计算。</li><li>把复杂问题简单化：将一个复杂的任务分解成多个步骤来完成，每一层只处理单一的步骤，比较简单和容易理解。而且便于维护数据的准确性，当数据出现问题之后，可以不用修复所有的数据，只需要从有问题的步骤开始修复。</li></ol><h1 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h1><ul><li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000038226620">https://segmentfault.com/a/1190000038226620</a></li></ul></div><footer class="post-footer"><div class="post-tags"><a href="/tags/%E7%90%86%E8%AE%BA/" rel="tag"># 理论</a></div><div class="post-nav"><div class="post-nav-item"><a href="/2020/f951716e3146/" rel="prev" title="Hive压缩格式与存储格式"><i class="fa fa-chevron-left"></i> Hive压缩格式与存储格式</a></div><div class="post-nav-item"><a href="/2021/1a4974f1eb10/" rel="next" title="滴滴数据指标体系建设实践（转）">滴滴数据指标体系建设实践（转） <i class="fa fa-chevron-right"></i></a></div></div></footer></article></div><div class="comments gitalk-container"></div></div></main><footer class="footer"><div class="footer-inner"><div class="copyright">&copy; 2021 – <span itemprop="copyrightYear">2022</span> <span class="with-love"><i class="fa fa-heart"></i> </span><span class="author" itemprop="copyrightHolder">Jeremyhzf</span></div><div class="busuanzi-count"><span class="post-meta-item" id="busuanzi_container_site_uv"><span class="post-meta-item-icon"><i class="fa fa-user"></i> </span><span class="site-uv" title="总访客量"><span id="busuanzi_value_site_uv"></span> </span></span><span class="post-meta-item" id="busuanzi_container_site_pv"><span class="post-meta-item-icon"><i class="fa fa-eye"></i> </span><span class="site-pv" title="总访问量"><span id="busuanzi_value_site_pv"></span></span></span></div></div></footer><script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script><script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script><script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script><script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://jeremyhzf.com/2021/725ecf34411d/"}</script><script src="/js/third-party/quicklink.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous"><script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"jeremyhzf","repo":"jeremyhzf.github.io","client_id":"42c0ba09a8c80255b96d","client_secret":"dfc2f6da92606883935a99606e4bd251d205c88a","admin_user":"jeremyhzf","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"8d2d974d217b07d0974c0854400d7b1f"}</script><script src="/js/third-party/comments/gitalk.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="UMgeGAOIi3I5Ncgc_2ZRy-AIufQL7eZNutKIai7M5g8">
+  <meta name="baidu-site-verification" content="code-sZmaqxmBhP">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"jeremyhzf.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.13.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":true,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="一、概念数据建模简单来说就是基于对业务的理解，将各种数据进行整合和关联，并最终使得这些数据可用性，可读性增强，让使用方能快速的获取到自己关心的有价值的信息并且及时的作出响应。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数仓建模">
+<meta property="og:url" content="https://jeremyhzf.com/2021/725ecf34411d/index.html">
+<meta property="og:site_name" content="Jeremy">
+<meta property="og:description" content="一、概念数据建模简单来说就是基于对业务的理解，将各种数据进行整合和关联，并最终使得这些数据可用性，可读性增强，让使用方能快速的获取到自己关心的有价值的信息并且及时的作出响应。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-01-14T11:38:37.000Z">
+<meta property="article:modified_time" content="2021-01-14T11:38:37.000Z">
+<meta property="article:author" content="Jeremyhzf">
+<meta property="article:tag" content="理论">
+<meta property="article:tag" content="数仓">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://jeremyhzf.com/2021/725ecf34411d/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://jeremyhzf.com/2021/725ecf34411d/","path":"2021/725ecf34411d/","title":"数仓建模"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>数仓建模 | Jeremy</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Jeremy</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">分享技术与生活</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%A6%82%E5%BF%B5"><span class="nav-text">一、概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E7%9B%AE%E7%9A%84"><span class="nav-text">二、目的</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%95%B0%E6%8D%AE%E5%BB%BA%E6%A8%A1%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="nav-text">三、数据建模的几种方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-ER%E6%A8%A1%E5%9E%8B-%E8%8C%83%E5%BC%8F%E5%BB%BA%E6%A8%A1"><span class="nav-text">1.ER模型(范式建模)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E7%BB%B4%E5%BA%A6%E5%BB%BA%E6%A8%A1"><span class="nav-text">2.维度建模</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%B4%E5%BA%A6%E5%BB%BA%E6%A8%A1%E7%9A%84%E5%88%86%E7%B1%BB"><span class="nav-text">维度建模的分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%B4%E5%BA%A6%E8%A1%A8"><span class="nav-text">维度表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E5%AE%9E%E8%A1%A8"><span class="nav-text">事实表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%B4%E5%BA%A6%E8%A1%A8%E5%92%8C%E4%BA%8B%E5%AE%9E%E8%A1%A8%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-text">维度表和事实表的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Data-Vault%E6%A8%A1%E5%9E%8B"><span class="nav-text">3.Data Vault模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Anchor%E6%A8%A1%E5%9E%8B"><span class="nav-text">4.Anchor模型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%9B%9B%E7%A7%8D%E5%BB%BA%E6%A8%A1%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93"><span class="nav-text">四、四种建模方法总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E6%A8%A1%E5%9E%8B%E5%88%86%E5%B1%82"><span class="nav-text">五、模型分层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-ods%E5%B1%82"><span class="nav-text">1. ods层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-cdm%E5%B1%82"><span class="nav-text">2. cdm层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-ads%E5%B1%82"><span class="nav-text">3. ads层</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E4%B8%9A%E5%8A%A1%E8%AE%BE%E8%AE%A1%E6%B5%81%E7%A8%8B"><span class="nav-text">六、业务设计流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E5%88%86%E5%B1%82%E7%9A%84%E5%A5%BD%E5%A4%84"><span class="nav-text">六、分层的好处</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%EF%BC%9A"><span class="nav-text">参考：</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jeremyhzf"
+      src="https://avatars.githubusercontent.com/u/49558849">
+  <p class="site-author-name" itemprop="name">Jeremyhzf</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeremyhzf" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeremyhzf" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jeremyhzf@gmail.com" title="E-Mail → mailto:jeremyhzf@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/jeremyhzf" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jeremyhzf.com/2021/725ecf34411d/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/49558849">
+      <meta itemprop="name" content="Jeremyhzf">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeremy">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="数仓建模 | Jeremy">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数仓建模
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-01-14 19:38:37" itemprop="dateCreated datePublished" datetime="2021-01-14T19:38:37+08:00">2021-01-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Bigdata/" itemprop="url" rel="index"><span itemprop="name">Bigdata</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%90%86%E8%AE%BA/" itemprop="url" rel="index"><span itemprop="name">理论</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="一、概念"><a href="#一、概念" class="headerlink" title="一、概念"></a>一、概念</h1><p>数据建模简单来说就是基于对业务的理解，将各种数据进行整合和关联，并最终使得这些数据可用性，可读性增强，让使用方能快速的获取到自己关心的有价值的信息并且及时的作出响应。</p>
+<span id="more"></span>
+
+<h1 id="二、目的"><a href="#二、目的" class="headerlink" title="二、目的"></a>二、目的</h1><p>大数据的数仓建模是通过建模的方法更好的组织、存储数据，以便在 性能、成本、效率和数据质量之间找到最佳平衡点。一般主要从下面四点考虑：</p>
+<ol>
+<li>高性能：能够快速查询所需的数据，减少数据I/O</li>
+<li>低成本：减少不必要的数据冗余和重复计算，实现计算结果数据复用，降低存储成本和计算成本。</li>
+<li>高效率：改善用户应用体验，提高使用数据的效率。</li>
+<li>高质量：改善数据统计口径的不一致性，减少数据计算错误的可能性，提供高质量的、一致的数据访问平台。</li>
+</ol>
+<h1 id="三、数据建模的几种方式"><a href="#三、数据建模的几种方式" class="headerlink" title="三、数据建模的几种方式"></a>三、数据建模的几种方式</h1><h2 id="1-ER模型-范式建模"><a href="#1-ER模型-范式建模" class="headerlink" title="1.ER模型(范式建模)"></a>1.ER模型(范式建模)</h2><blockquote>
+<ul>
+<li>1NF：属性不可再分割（例如不能存在5台电脑的属性，坏处：表都没法用）</li>
+<li>2NF：不能存在部分函数依赖（例如主键（学号+课名）–&gt;成绩，姓名，但学号–》姓名，所以姓名部分依赖于主键（学号+课名），所以要去除，坏处：数据冗余）</li>
+<li>3NF：不能存在传递函数依赖（学号–》宿舍种类–》价钱，坏处：数据冗余和增删异常）</li>
+</ul>
+</blockquote>
+<p><strong>MySQL关系模型</strong>：关系模型主要应用与OLTP系统中，为了保证数据的一致性以及避免冗余，所以大部分业务系统的表都是遵循第三范式的。</p>
+<p><strong>Hive 维度模型</strong>：维度模型主要应用于OLAP系统中，因为关系模型虽然冗余少，</p>
+<p>但是在大规模数据，跨表分析统计查询过程中，会造成多表关联，这会大大降低执行效率。</p>
+<p>所以HIVE把相关各种表整理成两种：<strong>事实表和维度表</strong>两种。所有维度表围绕着事实表进行解释。</p>
+<h2 id="2-维度建模"><a href="#2-维度建模" class="headerlink" title="2.维度建模"></a>2.维度建模</h2><h3 id="维度建模的分类"><a href="#维度建模的分类" class="headerlink" title="维度建模的分类"></a>维度建模的分类</h3><p>维度建模按数据组织类型划分可分为<strong>星型模型、雪花模型、星座模型</strong></p>
+<p>星型模型（事实表+一级维度表），雪花（事实表+多级维度），星座模型（星型模型+多个事实表）</p>
+<h3 id="维度表"><a href="#维度表" class="headerlink" title="维度表"></a>维度表</h3><p>一般是对事实的<strong>描述信息</strong>。每一张维表对应现实世界中的一个对象或者概念。  例如：用户、商品、日期、地区等。</p>
+<h3 id="事实表"><a href="#事实表" class="headerlink" title="事实表"></a>事实表</h3><p>事实表作为数据仓库维度建模的核心，紧紧围绕着业务过程来设计。其包含与该业务过程有关的维度引用（维度表外键）以及该业务过程的度量（通常是可累加的数字类型字段）。</p>
+<p>事实包含业务的度量，是定量的数据，如销售价格、销售数量、距离、速度、重量等是事实。</p>
+<p><strong>事实表分类：</strong></p>
+<ol>
+<li><strong>事务型事实表</strong>: 事务事实表用来记录事务层面的事实（例如交易流水值、销售数量等），它保存的是各业务过程的原子操作事件，即最细粒度的操作事件。其数据在事务发生后发生，粒度为每一行数据。一旦数据写入成功，数据就不再进行更改，其更新方式为<strong>增量更新</strong>。</li>
+<li><strong>周期型快照事实表</strong>: 周期快照事实表以具有规律性的、可预见的时间间隔来记录事实，主要用于分析一些存量型（例如商品库存，账户余额）或者状态型（空气温度，行驶速度）指标。</li>
+<li><strong>累积型快照事实表</strong>:  <strong>累计快照事实表用于跟踪业务事实的变化。</strong>累计快照事实表是基于一个业务流程中的多个关键业务过程联合处理而构建的事实表，例如，数据仓库中可能需要累积或者存储订单从下订单开始，到订单商品被打包、运输、和签收的各个业务阶段的时间点数据来跟踪订单声明周期的进展情况。当这个业务过程进行时，事实表的记录也要不断更新。</li>
+</ol>
+<p><strong>事实类型：</strong></p>
+<p>此处的事实类型是指<strong>度量值的类型</strong>，而非事实表的类型。事实（度量值）共分为三类，分别是可加事实，半可加事实和不可加事实。</p>
+<ol>
+<li>  可加事实</li>
+</ol>
+<p>可加事实是指可以按照与事实表相关的所有维度进行累加，例如事务型事实表中的事实。</p>
+<ol start="2">
+<li>  半可加事实</li>
+</ol>
+<p>半可加事实是指只能按照与事实表相关的一部分维度进行累加，例如周期型快照事实表中的事实。以上述各仓库中各商品的库存每天快照事实表为例，这张表中的库存事实可以按照仓库或者商品维度进行累加，但是不能按照时间维度进行累加，因为将每天的库存累加起来是没有任何意义的。</p>
+<ol start="3">
+<li>  不可加事实</li>
+</ol>
+<p>不可加事实是指完全不具备可加性，例如比率型事实。不可加事实通常需要转化为可加事实，例如比率可转化为分子和分母。</p>
+<table>
+<thead>
+<tr>
+<th>特点</th>
+<th>事务型事实表</th>
+<th>周期快照事实表</th>
+<th>累积快照事实表</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>时间/时期</td>
+<td>离散事务时间点</td>
+<td>有规律、可预测的间隔产生快照</td>
+<td>时间跨度不确定的不断变化的工作流</td>
+</tr>
+<tr>
+<td>粒度</td>
+<td>每行代表实体的一个事务</td>
+<td>每行代表一个时间周期的某个实体</td>
+<td>每行代表实体的一个业务周期</td>
+</tr>
+<tr>
+<td>事实表加载</td>
+<td>新增</td>
+<td>新增</td>
+<td>新增和修改</td>
+</tr>
+<tr>
+<td>事实表更新</td>
+<td>不更新</td>
+<td>不更新</td>
+<td>业务过程变更时更新</td>
+</tr>
+<tr>
+<td>时间维</td>
+<td>业务日期</td>
+<td>时期末</td>
+<td>相关业务过程事实和时间间隔事实</td>
+</tr>
+<tr>
+<td>事实</td>
+<td>事务事实</td>
+<td>累计事实</td>
+<td>限定多个业务阶段内的绩效</td>
+</tr>
+<tr>
+<td>举例</td>
+<td>交易流水</td>
+<td>每个时间段的库存数据</td>
+<td>交易流程中下单、支付、发货、确认收货业务过程</td>
+</tr>
+</tbody></table>
+<h3 id="维度表和事实表的区别"><a href="#维度表和事实表的区别" class="headerlink" title="维度表和事实表的区别"></a>维度表和事实表的区别</h3><ol>
+<li>事实表就是你要关注的内容。</li>
+<li>维度表就是你观察该事务的角度，是从哪个角度去观察这个内容的。</li>
+</ol>
+<p>​     例如，某地区商品的销量，是从地区这个角度观察商品销量的。事实表就是销量表(指标)，维度表就是地区表(维度)。</p>
+<p><strong>同步策略</strong>：</p>
+<ol>
+<li>维度表，每日全量或者每月（更长时间）全量</li>
+<li>事务型事实表：每日增量</li>
+<li>周期性事实表：拉链表(或者全量表)</li>
+</ol>
+<h2 id="3-Data-Vault模型"><a href="#3-Data-Vault模型" class="headerlink" title="3.Data Vault模型"></a>3.Data Vault模型</h2><p>Data Vault Dan Linstedt 发起创建的一种模型，它是模型的衍生，其设计的出发点也是为了实现数据的整合，但不能直接用于数据分析决策。它强调建立一个可审计的基础数据层，也就是强调数据的历史性、可追溯性和原子性，而不要求对数据进行过度的一致性处理和整合；</p>
+<p>同时它基于主题概念将企业数据进行结构化组织，并引入了更进一步的范式处理来优化模型，以应对源系统变更的扩展性。Data Vault 型由以下几部分组成。</p>
+<p>•  Hub ：是企业的核心业务实体，由 实体 key 、数据仓库序列代理键、装载时间、数据来源组成。</p>
+<p>•  Link ：代表 Hub 之间的关系。这里与 模型最大的区别是将关系作为一个独立的单元抽象，可以提升模型的扩展性。它可以直</p>
+<p>接描述 1:1 1:n n:n 的关系，而不需要做任何变更。它由 Hub 的代理键、装载时间、数据来源组成。</p>
+<p>•  Satellite ：是 Hub 的详细描述内容， 一个 Hub 可以有多个 Satellite它由 Hub 的代理键、装载时间、来源类型、详细的 Hub 描述信息组成。</p>
+<p>Data Vault 模型比 ER 模型更容易设计和产出，它的 ETL 加工可实现配置化。</p>
+<h2 id="4-Anchor模型"><a href="#4-Anchor模型" class="headerlink" title="4.Anchor模型"></a>4.Anchor模型</h2><h1 id="四、四种建模方法总结"><a href="#四、四种建模方法总结" class="headerlink" title="四、四种建模方法总结"></a>四、四种建模方法总结</h1><p>以上为四种基本的建模方法，当前主流建模方法为： ER模型、维度模型</p>
+<ol>
+<li>ER模型常用于OLTP数据库建模，应用到构建数仓时更偏重数据整合， 站在企业整体考虑，将各个系统的数据按相似性一致性、合并处理，为 数据分析、决策服务，但并不便于直接用来支持分析。缺陷：需要全面梳理企业所有的业务和数据流，周期长，人员要求高。</li>
+<li>维度建模是面向分析场景而生，针对分析场景构建数仓模型；重点关注快 速、灵活的解决分析需求，同时能够提供大规模数据的快速响应性能。针对性 强，主要应用于数据仓库构建和OLAP引擎低层数据模型。优点：不需要完整的梳理企业业务流程和数据，实施周期根据主题边界而定，容易快速实现demo</li>
+<li>数仓模型的选择是灵活的，不局限于某一种模型方法</li>
+<li>数仓模型的设计也是灵活的，以实际需求场景为导向</li>
+<li>模型设计要兼顾灵活性、可扩展，而对终端用户透明性</li>
+<li>模型设计要考虑技术可靠性和实现成本</li>
+</ol>
+<h1 id="五、模型分层"><a href="#五、模型分层" class="headerlink" title="五、模型分层"></a>五、模型分层</h1><blockquote>
+<p>数据仓库一般分为三层，自上而下分别为数据贴源层（ODS，Operation Data Store）、数据公共层（CDM，Common Data Model）和数据应用层（ADS，Application Data Service）。</p>
+</blockquote>
+<h3 id="1-ods层"><a href="#1-ods层" class="headerlink" title="1. ods层"></a>1. ods层</h3><ol>
+<li>保持数据原貌不做任何修改，起到备份数据的作用。</li>
+<li>数据采用压缩，减少磁盘存储空间（例如：原始数据100G，可以压缩到10G左右）</li>
+<li>创建分区表，防止后续的全表扫描</li>
+</ol>
+<h3 id="2-cdm层"><a href="#2-cdm层" class="headerlink" title="2. cdm层"></a>2. cdm层</h3><blockquote>
+<p><strong>维度建模一般按照以下四个步骤： 选择业务过程→声明粒度→确认维度→确认事实</strong></p>
+</blockquote>
+<p>数据公共层CDM（Common Data Model，又称通用数据模型层），包括DIM维度表、DWD,DW和DWS，由ODS层数据加工而成。主要完成数据加工与整合，建立一致性的维度，构建可复用的面向分析和统计的明细事实表，以及汇总公共粒度的指标</p>
+<ul>
+<li>公共维度层（DIM）：基于维度建模理念思想，建立企业一致性维度。<strong>降低数据计算口径和算法不统一风险</strong>。 公共维度层的表通常也被称为逻辑维度表，维度和维度逻 辑表通常一一对应。</li>
+<li>明细粒度事实层（DWD）：对数据进行<strong>规范化编码转换</strong>，<strong>清洗</strong>，<strong>统一格式</strong>，<strong>脱敏</strong>等，不做横向整合</li>
+<li>主题宽表层(DW)  ：对dwd各种信息进行整合，输出主题宽表(面 向业务过 程，不同业务过程的信息不冗余建设，采用外键形式)</li>
+<li>公共汇总粒度事实层（DWS）：以分析的主题对象作为建模驱动，基于上层的应用和产品的指标需求，构建公共粒度的汇总指标事实表，以宽表化手段物理化模型。构建命名规范、口径一致的统计指标，为上层提供公共指标，建立汇总宽表、明细事实表。</li>
+</ul>
+<p>公共汇总粒度事实层的表通常也被称为汇总逻辑表，用于存放派生指标数据。</p>
+<h3 id="3-ads层"><a href="#3-ads层" class="headerlink" title="3. ads层"></a>3. ads层</h3><p>数据应用层ADS（Application Data Service）：面向业务需求定制开发，存放数据产品个性化的统计指标数据。</p>
+<h1 id="六、业务设计流程"><a href="#六、业务设计流程" class="headerlink" title="六、业务设计流程"></a>六、业务设计流程</h1><p><strong>选择业务过程→声明粒度→确认维度→确认事实。</strong></p>
+<h1 id="六、分层的好处"><a href="#六、分层的好处" class="headerlink" title="六、分层的好处"></a>六、分层的好处</h1><ol>
+<li>清晰数据结构：每一个数据分层都有它的作用域，这样我们在使用表的时候能更方便地定位和理解。</li>
+<li>数据血缘追踪：简单来讲可以这样理解，我们最终给业务呈现的是一张能直接使用的张业务表，但是它的来源有很多，如果有一张来源表出问题了，我们希望能够快速准确地定位到问题，并清楚它的危害范围。</li>
+<li>减少重复开发：规范数据分层，开发一些通用的中间层数据，能够减少极大的重复计算。</li>
+<li>把复杂问题简单化：将一个复杂的任务分解成多个步骤来完成，每一层只处理单一的步骤，比较简单和容易理解。而且便于维护数据的准确性，当数据出现问题之后，可以不用修复所有的数据，只需要从有问题的步骤开始修复。</li>
+</ol>
+<h1 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h1><ul>
+<li>  <a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000038226620">https://segmentfault.com/a/1190000038226620</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%90%86%E8%AE%BA/" rel="tag"># 理论</a>
+              <a href="/tags/%E6%95%B0%E4%BB%93/" rel="tag"># 数仓</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/f951716e3146/" rel="prev" title="Hive压缩格式与存储格式">
+                  <i class="fa fa-chevron-left"></i> Hive压缩格式与存储格式
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/1a4974f1eb10/" rel="next" title="滴滴数据指标体系建设实践（转）">
+                  滴滴数据指标体系建设实践（转） <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jeremyhzf</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">125k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:53</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://jeremyhzf.com/2021/725ecf34411d/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script src="lib/darkmode-js.min.js"></script>
+
+<script>
+var options = {
+  bottom: '64px',
+  right: '32px',
+  left: 'unset',
+  time: '0.5s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: true,
+  label: '🌓',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();
+</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"jeremyhzf","repo":"jeremyhzf.github.io","client_id":"42c0ba09a8c80255b96d","client_secret":"dfc2f6da92606883935a99606e4bd251d205c88a","admin_user":"jeremyhzf","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"8d2d974d217b07d0974c0854400d7b1f"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>
