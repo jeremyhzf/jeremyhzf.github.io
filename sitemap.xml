@@ -268,21 +268,7 @@
   </url>
   
   <url>
-    <loc>https://jeremyhzf.com/tags/Mysql/</loc>
-    <lastmod>2022-10-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://jeremyhzf.com/tags/Docker/</loc>
-    <lastmod>2022-10-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jeremyhzf.com/tags/Git/</loc>
     <lastmod>2022-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -303,21 +289,14 @@
   </url>
   
   <url>
+    <loc>https://jeremyhzf.com/tags/Git/</loc>
+    <lastmod>2022-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://jeremyhzf.com/tags/%E5%B7%A5%E5%85%B7/</loc>
-    <lastmod>2022-10-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jeremyhzf.com/tags/Hexo/</loc>
-    <lastmod>2022-10-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jeremyhzf.com/tags/%E7%BD%91%E7%AB%99%E6%90%AD%E5%BB%BA/</loc>
     <lastmod>2022-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -338,28 +317,14 @@
   </url>
   
   <url>
-    <loc>https://jeremyhzf.com/tags/%E4%B8%9A%E5%8A%A1/</loc>
+    <loc>https://jeremyhzf.com/tags/Hexo/</loc>
     <lastmod>2022-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://jeremyhzf.com/tags/%E6%95%B0%E4%BB%93/</loc>
-    <lastmod>2022-10-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jeremyhzf.com/tags/%E6%8C%87%E6%A0%87%E4%BD%93%E7%B3%BB/</loc>
-    <lastmod>2022-10-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jeremyhzf.com/tags/Bigdata/</loc>
+    <loc>https://jeremyhzf.com/tags/%E7%BD%91%E7%AB%99%E6%90%AD%E5%BB%BA/</loc>
     <lastmod>2022-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -380,7 +345,21 @@
   </url>
   
   <url>
+    <loc>https://jeremyhzf.com/tags/%E6%95%B0%E4%BB%93/</loc>
+    <lastmod>2022-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://jeremyhzf.com/tags/%E5%AD%98%E5%82%A8/</loc>
+    <lastmod>2022-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jeremyhzf.com/tags/%E4%B8%9A%E5%8A%A1/</loc>
     <lastmod>2022-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -394,7 +373,21 @@
   </url>
   
   <url>
-    <loc>https://jeremyhzf.com/tags/Hadoop/</loc>
+    <loc>https://jeremyhzf.com/tags/%E6%8C%87%E6%A0%87%E4%BD%93%E7%B3%BB/</loc>
+    <lastmod>2022-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jeremyhzf.com/tags/Bigdata/</loc>
+    <lastmod>2022-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jeremyhzf.com/tags/Mysql/</loc>
     <lastmod>2022-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -409,6 +402,13 @@
   
   <url>
     <loc>https://jeremyhzf.com/tags/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/</loc>
+    <lastmod>2022-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jeremyhzf.com/tags/Hadoop/</loc>
     <lastmod>2022-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -431,28 +431,7 @@
   </url>
   
   <url>
-    <loc>https://jeremyhzf.com/categories/Mysql/</loc>
-    <lastmod>2022-10-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://jeremyhzf.com/categories/Docker/</loc>
-    <lastmod>2022-10-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jeremyhzf.com/categories/%E5%B7%A5%E5%85%B7/Nginx/</loc>
-    <lastmod>2022-10-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jeremyhzf.com/categories/%E5%B7%A5%E5%85%B7/Git/</loc>
     <lastmod>2022-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -466,7 +445,21 @@
   </url>
   
   <url>
+    <loc>https://jeremyhzf.com/categories/%E5%B7%A5%E5%85%B7/Nginx/</loc>
+    <lastmod>2022-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://jeremyhzf.com/categories/Linux/</loc>
+    <lastmod>2022-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jeremyhzf.com/categories/%E5%B7%A5%E5%85%B7/Git/</loc>
     <lastmod>2022-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -480,13 +473,6 @@
   </url>
   
   <url>
-    <loc>https://jeremyhzf.com/categories/%E7%BD%91%E7%AB%99%E6%90%AD%E5%BB%BA/</loc>
-    <lastmod>2022-10-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://jeremyhzf.com/categories/%E7%90%86%E8%AE%BA/</loc>
     <lastmod>2022-10-26</lastmod>
     <changefreq>weekly</changefreq>
@@ -494,21 +480,7 @@
   </url>
   
   <url>
-    <loc>https://jeremyhzf.com/categories/%E7%BD%91%E7%AB%99%E6%90%AD%E5%BB%BA/Hexo/</loc>
-    <lastmod>2022-10-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jeremyhzf.com/categories/%E7%90%86%E8%AE%BA/Bigdata/</loc>
-    <lastmod>2022-10-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jeremyhzf.com/categories/Bigdata/</loc>
+    <loc>https://jeremyhzf.com/categories/%E7%BD%91%E7%AB%99%E6%90%AD%E5%BB%BA/</loc>
     <lastmod>2022-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -522,7 +494,14 @@
   </url>
   
   <url>
-    <loc>https://jeremyhzf.com/categories/Bigdata/Hive/</loc>
+    <loc>https://jeremyhzf.com/categories/Bigdata/</loc>
+    <lastmod>2022-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jeremyhzf.com/categories/Mysql/</loc>
     <lastmod>2022-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -536,7 +515,28 @@
   </url>
   
   <url>
+    <loc>https://jeremyhzf.com/categories/%E7%BD%91%E7%AB%99%E6%90%AD%E5%BB%BA/Hexo/</loc>
+    <lastmod>2022-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://jeremyhzf.com/categories/Redis/</loc>
+    <lastmod>2022-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jeremyhzf.com/categories/Bigdata/Hive/</loc>
+    <lastmod>2022-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jeremyhzf.com/categories/%E7%90%86%E8%AE%BA/Bigdata/</loc>
     <lastmod>2022-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
